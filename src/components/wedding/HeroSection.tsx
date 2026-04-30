@@ -1,8 +1,8 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import { useScroll, useSpring, useTransform, motion } from "framer-motion";
 
-const FRAME_COUNT = 120;
-const FRAME_PREFIX = '/NewFrames/ezgif-frame-';
+const FRAME_COUNT = 92;
+const FRAME_PREFIX = '/new_frames_1/ezgif-frame-';
 const FRAME_SUFFIX = '.jpg';
 
 function getFrameUrl(index: number) {
@@ -49,8 +49,8 @@ const HeroSection = () => {
   // NATIVE SCROLL FIX: To avoid Framer Motion useTransform hook crashes from ternary motion-value swaps,
   // we use a unified spring but make it virtually instant (1:1 tracking) on mobile, and smooth/cinematic on desktop.
   const activeProgress = useSpring(scrollYProgress, {
-    stiffness: isMobile ? 400 : 40,
-    damping: isMobile ? 40 : 25,
+    stiffness: isMobile ? 150 : 50,
+    damping: isMobile ? 25 : 20,
     restDelta: 0.001,
   });
 
@@ -58,7 +58,7 @@ const HeroSection = () => {
   const currentFrameIndex = useTransform(
     activeProgress, 
     [0, 0.2, 0.6, 0.85, 1], 
-    [1, 24, 72, 108, FRAME_COUNT]
+    [1, 18, 55, 83, FRAME_COUNT]
   );
 
   // Typographic Opacity maps for the cinematic title (fades out as you scroll)
@@ -66,10 +66,7 @@ const HeroSection = () => {
   const titleScale = useTransform(activeProgress, [0, 0.25], [1, 0.95]);
   const titleY = useTransform(activeProgress, [0, 0.25], ["0%", "-30%"]);
 
-  // Opacity maps for cinematic story layers later in the scroll
-  const text1Opacity = useTransform(activeProgress, [0.18, 0.22, 0.4, 0.45], [0, 1, 1, 0]);
-  const text2Opacity = useTransform(activeProgress, [0.45, 0.5, 0.75, 0.8], [0, 1, 1, 0]);
-  const text3Opacity = useTransform(activeProgress, [0.85, 0.9, 1], [0, 1, 1]);
+  // Cinematic story layers removed
 
   const loadImages = useCallback(async (isCancelledRef: { current: boolean }) => {
     let loadedCount = 0;
@@ -201,8 +198,8 @@ const HeroSection = () => {
         </div>
 
         {/* Night Gradients to blend UI */}
-        <div className="absolute inset-0 z-[3] bg-gradient-to-t from-wedding-dark via-transparent to-transparent pointer-events-none" />
-        <div className="absolute inset-0 z-[3] bg-gradient-to-b from-black/60 via-black/20 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 z-[3] bg-gradient-to-t from-wedding-dark/40 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 z-[3] bg-gradient-to-b from-black/20 via-transparent to-transparent pointer-events-none" />
 
         {/* The Initial Main Content / Typography */}
         <motion.div
@@ -245,29 +242,7 @@ const HeroSection = () => {
           </div>
         </motion.div>
 
-        {/* Cinematic Scrollytelling Layers during descent */}
-        <div className="absolute inset-x-0 bottom-0 top-0 pointer-events-none z-[15] flex flex-col items-center justify-end pb-16 sm:pb-24 md:pb-32 safe-area-pad">
-          
-          <motion.div style={{ opacity: text1Opacity }} className="absolute bottom-20 sm:bottom-28 md:bottom-32 text-center max-w-sm sm:max-w-md md:max-w-lg px-4 sm:px-6">
-            <h2 className="text-wedding-gold-light font-heading text-lg sm:text-xl md:text-3xl tracking-[0.2em] sm:tracking-[0.3em] font-light mb-2 sm:mb-3">THE ASCENT</h2>
-            <p className="text-wedding-ivory/60 font-subtext text-xs sm:text-sm md:text-base tracking-wider sm:tracking-widest uppercase">Approaching the sacred gopuram</p>
-          </motion.div>
-
-          <motion.div style={{ opacity: text2Opacity }} className="absolute bottom-20 sm:bottom-28 md:bottom-32 text-center max-w-sm sm:max-w-md md:max-w-lg px-4 sm:px-6">
-            <h2 className="text-wedding-gold-light font-heading text-lg sm:text-xl md:text-3xl tracking-[0.2em] sm:tracking-[0.3em] font-light mb-2 sm:mb-3">THE INNER SANCTUM</h2>
-            <p className="text-wedding-ivory/60 font-subtext text-xs sm:text-sm md:text-base tracking-wider sm:tracking-widest uppercase">Descending into a realm of peace</p>
-          </motion.div>
-
-          <motion.div style={{ opacity: text3Opacity }} className="absolute bottom-20 sm:bottom-28 md:bottom-32 text-center max-w-sm sm:max-w-md md:max-w-lg px-4 sm:px-6">
-            <h2 className="text-wedding-gold-light font-heading text-xl sm:text-2xl md:text-4xl tracking-[0.3em] sm:tracking-[0.4em] font-semibold mb-3 sm:mb-4 drop-shadow-2xl">OM GAM GANAPATAYE NAMAHA</h2>
-            <p className="text-wedding-ivory/80 font-subtext flex items-center justify-center gap-2 sm:gap-4 text-[10px] sm:text-xs tracking-[0.3em] sm:tracking-[0.4em] uppercase">
-               <span className="w-5 sm:w-8 h-[1px] bg-wedding-gold-light/50" />
-               Lord Ganesha Revealed
-               <span className="w-5 sm:w-8 h-[1px] bg-wedding-gold-light/50" />
-            </p>
-          </motion.div>
-
-        </div>
+        {/* Scrollytelling Layers removed */}
       </div>
     </div>
   );
