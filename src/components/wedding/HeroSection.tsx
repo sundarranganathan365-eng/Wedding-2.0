@@ -191,7 +191,7 @@ const HeroSection = () => {
         <div className="absolute inset-0 z-[2] w-full h-full overflow-hidden bg-[#0a0a0a]">
           <img
             ref={imgRef}
-            className={`w-full h-full object-cover object-[47%_center] transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            className={`w-full h-full object-cover object-center transition-opacity duration-1000 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             alt="Cinematic Scroll Reveal"
             draggable={false}
           />
